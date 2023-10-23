@@ -1,3 +1,4 @@
+import 'package:calendar_scheduler/constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -13,6 +14,15 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
+    final defaultBoxDeco =  BoxDecoration( // -- 반복해서 사용하는 캘린더 날짜 박스 스타일
+          borderRadius: BorderRadius.circular(6.0),
+          color: Colors.grey[200],
+        );
+    final defaultTextStyle = TextStyle(
+      color: Colors.grey[600],
+      fontWeight: FontWeight.w700
+    );
+
     return TableCalendar(
       focusedDay: DateTime.now(),
       firstDay: DateTime(1800),
@@ -24,6 +34,24 @@ class _CalendarState extends State<Calendar> {
           fontWeight: FontWeight.w700,
           fontSize: 16.0
         )
+      ),
+      calendarStyle: CalendarStyle(
+        isTodayHighlighted: false,
+        defaultDecoration: defaultBoxDeco, // -- 디폴트 날짜
+        weekendDecoration: defaultBoxDeco, // -- 주말 날짜
+        selectedDecoration: BoxDecoration( // -- 선택 날짜
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(6.0),
+          border: Border.all(
+            color: PRIMARY_COLOR,
+            width: 1.0,
+          )
+        ),
+        defaultTextStyle: defaultTextStyle,
+        weekendTextStyle: defaultTextStyle,
+        selectedTextStyle: defaultTextStyle.copyWith(
+          color: PRIMARY_COLOR,
+        ), // -- destructuring
       ),
       onDaySelected: (DateTime selectedDay, DateTime focusedDay){ // -- 특정 날짜 누를 떄 실행
         setState(() {
